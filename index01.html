@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apology Request and Interactive Questions</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            animation: rainbow 5s linear infinite;
+            background: linear-gradient(
+                45deg,
+                #ff0000,
+                #ff7f00,
+                #ffff00,
+                #00ff00,
+                #0000ff,
+                #4b0082,
+                #8f00ff
+            );
+            background-size: 200% 200%;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 50%, #FF1493 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .question {
+            background: white;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-5px);
+        }
+
+        .buttons button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .buttons button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0.5rem;
+                padding: 0.5rem;
+            }
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color:  #FFB6C1;
+            background-size: 150% 150%;
+            background-position: 0% 0%;
+            background-repeat: no-repeat;
+            color: #333;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        .question {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: none;
+            background-color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+            line-height: 1.5;
+            animation: fadeIn 0.5s;
+        }
+        .question.active {
+            display: block;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            background-color: #4CAF50; /* Green */
+            color: #fff;
+        }
+        .buttons button:hover {
+            background-color: #3e8e41; /* Darker green */
+            opacity: 0.8;
+        }
+        .buttons button.yes {
+            background-color: #28a745; /* Bright green */
+        }
+        .buttons button.no {
+            background-color: #dc3545; /* Red */
+            position: relative;
+        }
+        .image {
+            width: 200px;
+            height: 200px;;
+            margin-top: 20px;
+            border-radius: 50%;
+            animation: rainbow-border 2s linear infinite;
+            border: 4px solid;
+            border-image: linear-gradient(
+                45deg,
+                #ff0000,
+                #ff8000,
+                #ffff00,
+                #00ff00,
+                #00ffff,
+                #0000ff,
+                #8000ff,
+                #ff0080
+            ) 1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .question {
+                font-size: 16px;
+            }
+            .buttons button {
+                padding: 10px 15px;
+            }
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+        }
+
+        .profile-image-bg {
+            position: absolute;
+            content: '';
+            background: linear-gradient(
+                45deg,
+                #ff0000, #ff8000, #ffff00, #00ff00,
+                #00ffff, #0000ff, #8000ff, #ff0080,
+                #FF69B4, #FFB6C1, #FFC0CB, #FF1493,
+                #FF00FF, #DA70D6, #DDA0DD, #EE82EE,
+                #FF1493, #FF69B4, #FFB6C1, #FFA07A,
+                #FF8C00, #FFD700, #9400D3, #8A2BE2,
+                #4B0082, #9932CC, #FF1493, #FF69B4
+            );
+            background-size: 400% 400%;
+            animation: 
+                moveColor 1s linear infinite,
+                rotate 1ms linear infinite,
+                colorShift 1s linear infinite,
+                moveGradient 0.3s ease infinite;
+            position: absolute;
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            top: -10px;
+            left: -10px;
+            border-radius: 50%;
+            z-index: -1;
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes colorShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        }
+
+        .profile-image {
+            
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes colorMove {
+            0% {
+                background: linear-gradient(0deg, #ff0000, #ff8000);
+                transform: scale(1.1) rotate(0deg);
+            }
+            25% {
+                background: linear-gradient(90deg, #ffff00, #00ff00);
+                transform: scale(1.1) rotate(90deg);
+            }
+            50% {
+                background: linear-gradient(180deg, #00ffff, #0000ff);
+                transform: scale(1.1) rotate(180deg);
+            }
+            75% {
+                background: linear-gradient(270deg, #8000ff, #ff0080);
+                transform: scale(1.1) rotate(270deg);
+            }
+            100% {
+                background: linear-gradient(360deg, #ff0000, #ff8000);
+                transform: scale(1.1) rotate(360deg);
+            }
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes moveColor {
+            0%, 100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question1" class="question active">
+            <div class="profile-image-container">
+                <div class="profile-image-bg"></div>
+                <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+            </div>
+            <center><h1>A DEEP HEART SORRY</h1>
+            <h2>KHUSHI</h2>
+            <br>
+
+            <hr>
+            <pre>               
+     <b><p >
+        KHUSHIKHUSHIKHUSHI  KHUSHIKHUSHIKHUSHI KHUSHIKHUSHIKHUSHI KHUSHIKHUSHIKHUSHI  KHUSHI     KHUSHI
+        KHUSHIKHUSHIKHUSHI  KHUSHIKHUSHIKHUSHI KHUSHIKHUSHIKHUSHI KHUSHI      KHUSHI  KHUSHI     KHUSHI
+        KHUSHI              KHUSHI      KHUSHI KHUSHI      KHUSHI KHUSHI      KHUSHI   KHUSHI    KHUSHI
+        KHUSHI              KHUSHI      KHUSHI KHUSHI      KHUSHI KHUSHI      KHUSHI    KHUSHI   KHUSHI
+        KHUSHIKHUSHIKHUSHI  KHUSHI      KHUSHI KHUSHI      KHUSHI KHUSHIKHUSHIKHUSHI       KHUSHIKHUSHI
+        KHUSHIKHUSHIKHUSHI  KHUSHI      KHUSHI KHUSHI      KHUSHI KHUSHIKHUSHIKHUSHI             KHUSHI
+                    KHUSHI  KHUSHI      KHUSHI KHUSHI      KHUSHI KHUSHIKHUSHI                   KHUSHI
+                    KHUSHI  KHUSHI      KHUSHI KHUSHI      KHUSHI KHUSHI   KHUSHI                KHUSHI
+        KHUSHIKHUSHIKHUSHI  KHUSHIKHUSHIKHUSHI KHUSHIKHUSHIKHUSHI KHUSHI      KHUSHI             KHUSHI
+        KHUSHIKHUSHIKHUSHI  KHUSHIKHUSHIKHUSHI KHUSHIKHUSHIKHUSHI KHUSHI         KHUSHI          KHUSHI</p> 
+    </b>
+            </pre>
+            </center>
+            <style>
+                @keyframes fadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            </style>
+           
+            <hr>
+            <p style="font-size: 1.5rem">"I'm really sorry if I've ever made you feel uncomfortable or upset, and If I made some mistakes in the past, please forgive me. I promise to do better in the future."</p>
+            <p style="font-size: 1.5rem">I couldn't communicate with you properly, which caused some misunderstanding. Can you give me a chance to correct my mistake?</p>
+            <p style="font-size: 1.5rem">I know you might have been rude to me, and it really hurt. I asked for help for classwork last semester because I didn't have proper notes, so i ask again and again and I didn't mean to frustrate you. If there's something else bothering you, please let me know. I just want to make things better between us. I didn't mean to upset you, and I hope you can forgive me.</p>
+            <h1>I know you have a kind heart and a forgiving nature. Please accept my apology."</h1>
+            <h3>Can you please forgive me and give me a chance to be your friend?</h3>
+            <hr>
+            <h4>PLEASE FORGIVE ME?</h4>
+            <p></p>
+            <div class="buttons">
+                <button class="yes" onclick="showNextQuestion('question2')">Yes</button>  
+                <button class="no" onclick="showNextQuestion('wrong-question')">No</button>
+            </div>
+        </div>
+            <div id="think-again" class="question">
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div><h2>Please Think Again!</h2>
+            <p>Everyone deserves a second chance. I promise to make things right and never heart you again.</p>
+            <div class="buttons">
+                <button class="yes" onclick="showNextQuestion('question2')">Okay, I'll forgive you</button>
+                <button class="yes" onclick="window.location.href='https://wa.me/9450433135'">Its ok but tell me what i did wrong</button>
+                <button class="no" onclick="showNextQuestion('think again and again')">No</button>
+            </div>
+            </div>
+            <div id="think again and again" class="question">
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div>
+                <h2>I'm sorry again for my mistake you have kind heart please agree😭</h2>
+                <p>I promise i never heart you again .</p>
+                <p>Please give one and last chance Only</p>
+                <p>I think you never get a friend like me how confress you like this.</p>
+                <div class="buttons">
+                    <button class="yes" onclick="showNextQuestion('question2')">Okay, I'll forgive you</button>
+                    <button class="no" onclick="showNextQuestion('think-again-and-again-and-again')">Still No</button>
+                </div>
+            </div>
+            <div id="think-again-and-again-and-again" class="question">
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div>
+                <h2>Please don't say no again and again 😢</h2>
+                <p>I really want to be your friend and make things right</p>
+                <p>Everyone deserves another chance to prove themselves</p>
+                <p>I promise I'll be a good friend and never disappoint you</p>
+                <div class="buttons">
+                    <button class="yes" onclick="showNextQuestion('question2')">Okay, I forgive you</button>
+                    <button class="yes" onclick="window.location.href='https://wa.me/9450433135'">Let's talk about it</button>
+                    <button class="no" onclick="showNextQuestion('think-again-and-again-and-again-and-again')">No way</button>
+                </div>
+            </div>
+            <div id="think-again-and-again-and-again-and-again" class="question">
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div>
+                <h2>You'll regret losing a true friend like me 💔</h2>
+                <p>One day you'll look back and realize:</p>
+                <p>• You lost someone who truly cared about you</p>
+                <p>• Someone who was ready to change for you</p>
+                <p>• A friend who would've been there through thick and thin</p>
+                <p>• The memories we could have made together</p>
+                <p>Is it worth losing all of this just because you won't forgive?</p>
+                <div class="buttons">
+                    <button class="yes" onclick="showNextQuestion('question2')">I forgive you</button>
+                    <button class="yes" onclick="window.location.href='https://wa.me/9450433135'">Let's discuss this</button>
+                    <button class="no" onclick="showNextQuestion('think-again-and-again-and-again-and-again-and-again')">Still don't care</button>
+                </div>
+            </div>
+            <div id="think-again-and-again-and-again-and-again-and-again" class="question">
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div>
+                <h2>I think you're are not kind hearted 💔</h2>
+                <p>I tell you sorry but you keep eating my feelings</p>
+                <p>I don't need a friend like you who can't forgive</p>
+                <div class="buttons">
+                    <button class="yes" onclick="showNextQuestion('question2')">Wait, I changed my mind</button>
+                    <button class="no" onclick="showNextQuestion('think-again-and-again-and-again-and-again-and-again-and-again')">Whatever</button>
+                </div>
+            </div>
+            <div id="think-again-and-again-and-again-and-again-and-again-and-again" class="question">
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div>
+                <h2>I'm glad you changed your mind! 🥺💕</h2>
+                <p>This means so much to me. Thank you for giving me another chance.</p>
+                <p>I promise I'll prove that your decision to forgive me was right.</p>
+                <p>Let's make a fresh start and build a beautiful friendship!</p>
+                <div class="buttons">
+                    <button class="yes" onclick="showNextQuestion('question2')">Yes, let's start fresh!</button>
+                    <button class="yes" onclick="window.location.href='https://wa.me/9450433135'">Let's talk more</button>
+                    <button class="no" onclick="showNextQuestion('better-friend')">I take it back</button>
+                </div>
+            </div>
+            <div id="better-friend" class="question">
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div>
+                <h2>I think I'll find a better friend 😔</h2>
+                <p>Someone who understands the value of forgiveness</p>
+                <p>Someone who sees the effort I'm making</p>
+                <p>Someone who appreciates genuine apologies</p>
+                <p>I hope you find what you're looking for too...</p>
+                <div class="buttons">
+                    <button class="yes" onclick="showNextQuestion('question2')">Wait, I was wrong</button>
+                    <button class="no" onclick="window.location.href='index.html'">Goodbye </button>
+                </div>
+                </div>
+            </div>
+
+        <div id="wrong-question" class="question">
+            <div class="profile-image-container">
+                <div class="profile-image-bg"></div>
+                <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+            </div><h2>Can you please tell me what I did wrong?</h2>
+            <p>I want to understand my mistakes so I can improve and make things right.</p>
+            <div class="buttons">
+                <button class="yes" onclick="window.location.href='https://wa.me/9450433135'">Tell my mistake</button>
+                <button class="no" onclick="showNextQuestion('think-again')">No</button>
+            </div>
+        </div>
+        <div id="question2" class="question"><div class="profile-image-container">
+            <div class="profile-image-bg"></div>
+            <div class="profile-image-container">
+                <div class="profile-image-bg"></div>
+                <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+            </div> </div>
+            <h1>A very heart full thanks to you for your Forgives and You make my heart smile! 😊</h1>
+            <h4> It is a great day for me  because you forgave me</h4>
+            <h2>I always make things and conversation good between us.</h2>
+            <h1>I want a friend like you.</h1>
+            <div class="buttons">
+                <button class="yes" onclick="showNextQuestion('question3')">Of course!</button>
+                <button class="no" onclick="moveNoButton(this)">No</button>
+            </div>
+        </div>
+        <div id="question3" class="question">
+            <div class="profile-image-container">
+                <div class="profile-image-bg"></div>
+                <div class="profile-image-container">
+                    <div class="profile-image-bg"></div>
+                    <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+                </div></div><h2>You're Amazing! ✨</h2>
+            <p>Would you like to create beautiful memories together?</p>
+            <h1>Please forget the past and don't remember it back in future, Now start a fresh</h1>
+            <h5>Can we be friends forever?</h5>
+            <div class="buttons">
+                <button class="yes" onclick="showNextQuestion('question4')">Yes, I'd love to!</button>
+                <button class="no" onclick="moveNoButton(this)">No</button>
+            </div>
+        </div>
+        <div id="question4" class="question">
+            <div class="profile-image-container">
+                <div class="profile-image-bg"></div>
+                <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+            </div><h1>Again thanks from deep heart for your Forgives </h1>
+            <h1>It is a very good day because i get a good friend</h1>
+            <h3>Thanks! for becoming my a friend </h3>
+            <p>Do you enjoy spending college time together and making memoriesble and unforgetable for forever?</p>
+            <div class="buttons">
+                <button class="yes" onclick="showNextQuestion('next-question')">Yes</button>
+                <button class="no" onclick="moveNoButton(this)">No</button>
+            </div>
+        </div> 
+        <div id="next-question" class="question">
+            <div class="profile-image-container">
+                <div class="profile-image-bg"></div>
+                <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+            </div><p></p>
+            <p>Let's make it memorable and unforgettable forever! </p>
+            <div class="buttons">
+                <button class="yes" onclick="showFinalMessage()">Yes</button>
+                <button class="no" onclick="moveNoButton(this)">No</button>
+            </div>
+        </div>
+        <div id="final-message" class="question">
+            <div class="profile-image-container">
+                <div class="profile-image-bg"></div>
+                <img src="https://i.postimg.cc/W39y6PVh/Whats-App-Image-2024-09-28-at-19-15-21-00b49108.jpg" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+            </div><p>Thank you for your response! 😊</p>
+            <p>Please reply on the link provided below how it is?</p>
+            <img src="https://i.postimg.cc/fL0L2vHB/Screenshot-2024-09-28-064056.png" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; position: relative; z-index: 1;">
+            <div class="buttons">
+                <button class="yes" onclick="window.location.href='https://wa.me/9450433135'; return false;" target="_blank">Give Feedback</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showNextQuestion(nextQuestionId) {
+            const currentQuestion = document.querySelector('.question.active');
+            currentQuestion.classList.remove('active');
+            const nextQuestion = document.getElementById(nextQuestionId);
+            nextQuestion.classList.add('active');
+        }
+
+        function moveNoButton(button) {
+            const offsetX = Math.random() * 200 - 100;
+            const offsetY = Math.random() * 200 - 100;
+            button.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        }
+
+        function showFinalMessage() {
+            const currentQuestion = document.querySelector('.question.active');
+            currentQuestion.classList.remove('active');
+            const finalMessage = document.getElementById('final-message');
+            finalMessage.classList.add('active');
+        }
+    </script>
+</body>
+</html>

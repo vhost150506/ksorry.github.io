@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sorry Khushi</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="carousel">
+    <div class="carousel-item">
+        <div class="carousel-box">
+            <div class="num">01</div>
+            <div class="title">Hi Khushi 👋</div>
+            <img src="https://i.postimg.cc/5ynY0wv5/20241103-140113.jpg" />
+        </div>
+    </div>
+
+    <div class="carousel-item">
+        <div class="carousel-box">
+            <div class="num">02</div>
+            <div class="title">Please Keep Dragging till last 😊</div>
+            <img src="https://i.postimg.cc/0jkYN56S/02.png" />
+        </div>
+    </div>
+
+    <div class="carousel-item">
+        <div class="carousel-box">
+            <div class="num">03</div>
+            <div class="title">I want to tell you Something 😍 </div>
+            <img src="https://i.postimg.cc/dQ6RxCXj/03.jpg" />
+        </div>
+    </div>
+
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">04</div>
+			<div class="title">You are Amazing 🤩 </div>
+			<img src="https://i.postimg.cc/X7vKSJ6S/04.jpg" />
+        </div>
+	</div>
+
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">05</div>
+			<div class="title">Most Beautiful Person on i ever seen 😗  🎀  💯</div>
+			<img src="https://i.postimg.cc/c1FYmSgD/05.jpg" />
+        </div>
+	</div>
+
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">06</div>
+			<div class="title">I feel very Lucky Everyday when  i met you 😇</div>
+			<img src="https://i.postimg.cc/PrNDVR1d/06.jpg" />
+        </div>
+	</div>
+
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">07</div>
+			<div class="title">You're So Special To Me so i making a apology and friend request to You 😊🌟</div>
+			<img src="https://i.postimg.cc/15TqkrKw/07.jpg" />
+        </div>
+	</div>
+
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">08</div>
+			<div class="title">i try to talk to you but you get rude when i try to talk to you 😒</div>
+			<img src="https://i.postimg.cc/6pvvt4HS/08.jpg" />
+        </div>
+	</div>
+
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">09</div>
+			<div class="title"> but i made this to make you smile 😊 and tell sorry to you for my mistakes</div>
+			<img src="https://i.postimg.cc/TPvWw2FP/09.jpg" />
+        </div>
+	</div>
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">10</div>
+			<div class="title">You Make Me Smile Everyday  please don't ignore me and forgive me please 😊</div>
+			<img src="https://i.postimg.cc/fb7S0nQf/10.jpg" />
+		</div>
+	</div>
+
+	<div class="carousel-item">
+		<div class="carousel-box">
+			<div class="num">11</div>
+			<div class="title">"Wait, there's more for you."😊</div>
+			<img src="https://i.postimg.cc/L8Z5Kdy3/20241103-135500.jpg" />
+		</div>
+	</div>
+  </div>
+
+  <div id="countdown" style="position: fixed; bottom: 20px; right: 20px; 
+       background: rgba(0,0,0,0.8); color: white; padding: 10px; 
+       border-radius: 5px; font-size: 18px;">7:00</div>
+
+  <script>
+    const lastItem = document.querySelector('.carousel-item:nth-child(11)');
+    const countdownDisplay = document.getElementById('countdown');
+    let hasRedirected = false;
+    let timeLeft = 7; // Changed from 15 to 7 seconds
+
+    function updateCountdown() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      countdownDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasRedirected) {
+          hasRedirected = true;
+          
+          const countdownInterval = setInterval(() => {
+            timeLeft--;
+            updateCountdown();
+            
+            if (timeLeft <= 0) {
+              clearInterval(countdownInterval);
+              window.location.href = "index01.html";
+            }
+          }, 1000);
+        }
+      });
+    }, {
+      threshold: 0.7
+    });
+
+    observer.observe(lastItem);
+
+    window.addEventListener('load', () => {
+      carousel.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    window.addEventListener('load', initializeControls);
+  </script>
+
+  <script src="./script.js"></script>
+</body>
+</html>
