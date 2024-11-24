@@ -97,20 +97,19 @@
 
   <div id="countdown" style="position: fixed; bottom: 20px; right: 20px; 
        background: rgba(0,0,0,0.8); color: white; padding: 10px; 
-       border-radius: 5px; font-size: 18px;">10:00</div>
+       border-radius: 5px; font-size: 18px;">7:00</div>
 
   <script>
     const lastItem = document.querySelector('.carousel-item:nth-child(11)');
     const countdownDisplay = document.getElementById('countdown');
     let hasRedirected = false;
-    let timeLeft = 10; // Changed from 15 to 7 seconds
+    let timeLeft = 7; // Changed from 15 to 7 seconds
 
     function updateCountdown() {
       const minutes = Math.floor(timeLeft / 60);
       const seconds = timeLeft % 60;
       countdownDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !hasRedirected) {
